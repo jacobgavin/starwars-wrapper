@@ -11,7 +11,9 @@ export default async function findCharacters(
 
   const characterUrls = movies.map((movie) => movie.characters).flat();
   const characters = await Promise.all(
-    unique(characterUrls).map((url) => starwarsService.get(url))
+    unique(characterUrls).map((url) =>
+      starwarsService.peopleById(starwarsService.getIdFromUrl(url))
+    )
   );
 
   return characters.map((character) => ({

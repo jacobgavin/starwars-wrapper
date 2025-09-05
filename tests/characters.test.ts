@@ -40,6 +40,8 @@ describe("Characters API", () => {
     expect(res.status).toBe(200);
     const character = await res.json();
 
+    expect(character.name).toEqual("Luke Skywalker");
+    expect(character.homeworld).toEqual("Tatooine");
     expect(character.height).toEqual("172");
     expect(character.mass).toEqual("77");
     expect(character.gender).toEqual("male");
@@ -54,11 +56,14 @@ describe("Characters API", () => {
 
 async function expectCharacterResponse(res: Response): Promise<Character[]> {
   expect(res.status).toBe(200);
-  const response = await res.json();
-  expect(response).to.be.an("array").that.is.not.empty;
-  expect(response[0]).to.have.property("name").that.is.a("string");
-  expect(response[0]).to.have.property("homeworld").that.is.a("string");
-  return response;
+  const characters = await res.json();
+  expect(characters).to.be.an("array").that.is.not.empty;
+  expect(characters[0]).to.have.property("name").that.is.a("string");
+  expect(characters[0]).to.have.property("homeworld").that.is.a("string");
+  characters.forEach((character: any) => {
+    expect(character.homeworld).not.toMatch(/https/i);
+  });
+  return characters;
 }
 
 function makeSessionIdHeader(res: Response) {

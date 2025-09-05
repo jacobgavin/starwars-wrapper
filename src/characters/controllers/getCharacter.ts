@@ -1,10 +1,13 @@
 import { starwarsService } from "../../services/starwarsService.js";
+import type { CharacterDetail } from "../Character.js";
 
-export default async function getCharacter(id: number) {
-  const character = await starwarsService.characterById(id);
+export default async function getCharacter(
+  id: number
+): Promise<CharacterDetail> {
+  const character = await starwarsService.peopleById(id);
   const movies = await Promise.all(
     character.films.map((url) => {
-      return starwarsService.filmById(getIdFromUrl(url));
+      return starwarsService.filmById(starwarsService.getIdFromUrl(url));
     })
   );
 
@@ -19,17 +22,11 @@ export default async function getCharacter(id: number) {
   });
 
   return {
+    name: character.name,
+    homeworld: character.homeworld,
     height: character.height,
     mass: character.mass,
     gender: character.gender,
     movies: movies.map((movie) => movie.title),
   };
-}
-
-function getIdFromUrl(url: string): number {
-  const parts = url.split("/");
-  if (url.endsWith("/")) {
-    return parseInt(parts[parts.length - 2], 10);
-  }
-  return parseInt(parts[parts.length - 1]);
 }

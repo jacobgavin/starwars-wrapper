@@ -48,12 +48,27 @@ class StarwarsService {
     return Promise.all(movie[key].map((url) => starwarsService.get(url)));
   }
 
-  async characterById(id: number): Promise<People> {
-    return this.fetch(`people/${id}`);
+  async peopleById(id: number): Promise<People> {
+    const people = await this.fetch(`people/${id}`);
+    const homeworld = await this.fetch(
+      `planets/${this.getIdFromUrl(people.homeworld)}`
+    );
+    return {
+      ...people,
+      homeworld: homeworld.name,
+    };
   }
 
-  async get(url: string) {
+  private async get(url: string) {
     return this.fetch(url);
+  }
+
+  getIdFromUrl(url: string): number {
+    const parts = url.split("/");
+    if (url.endsWith("/")) {
+      return parseInt(parts[parts.length - 2], 10);
+    }
+    return parseInt(parts[parts.length - 1]);
   }
 }
 
@@ -73,6 +88,8 @@ type Detail = {
 };
 
 type People = {
+  name: string;
+  homeworld: string;
   height: number;
   mass: number;
   gender: string;

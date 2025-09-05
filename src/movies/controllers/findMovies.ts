@@ -2,12 +2,7 @@ import { starwarsService } from "../../services/starwarsService.js";
 import type { Movie } from "../Movie.js";
 import type { MovieSort } from "../validators.js";
 
-const sortFieldMap = {
-  release: "release_date",
-  episode: "episode_id",
-} as const;
-
-export default async function findMovies(sort?: MovieSort) {
+export default async function findMovies(sort?: MovieSort): Promise<Movie[]> {
   const movies = await starwarsService.films();
 
   if (sort) {
@@ -20,6 +15,11 @@ export default async function findMovies(sort?: MovieSort) {
     release_date: movie.release_date,
   }));
 }
+
+const sortFieldMap = {
+  release: "release_date",
+  episode: "episode_id",
+} as const;
 
 function sortMovies(movies: Movie[], { field, order }: MovieSort) {
   if (!field) {
