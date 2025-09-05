@@ -34,6 +34,22 @@ describe("Characters API", () => {
     const secondResponse = await expectCharacterResponse(characters2);
     expect(firstResponse).to.have.length.below(secondResponse.length);
   });
+
+  it("GET /characters/:id returns character with movies in chronological order", async () => {
+    const res = await app.request("/characters/1");
+    expect(res.status).toBe(200);
+    const character = await res.json();
+
+    expect(character.height).toEqual("172");
+    expect(character.mass).toEqual("77");
+    expect(character.gender).toEqual("male");
+    expect(character.movies).toEqual([
+      "Revenge of the Sith",
+      "A New Hope",
+      "The Empire Strikes Back",
+      "Return of the Jedi",
+    ]);
+  });
 });
 
 async function expectCharacterResponse(res: Response): Promise<Character[]> {

@@ -1,4 +1,4 @@
-import { swapiClient } from "../../swapiClient.js";
+import { starwarsService } from "../../services/starwarsService.js";
 import type { Movie } from "../Movie.js";
 import type { MovieSort } from "../validators.js";
 
@@ -8,8 +8,7 @@ const sortFieldMap = {
 } as const;
 
 export default async function findMovies(sort?: MovieSort) {
-  const data = await swapiClient.fetch("films");
-  const movies = data.results as Movie[];
+  const movies = await starwarsService.films();
 
   if (sort) {
     sortMovies(movies, sort);

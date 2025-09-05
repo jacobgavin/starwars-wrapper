@@ -5,6 +5,7 @@ import z from "zod";
 import { SESSION_COOKIE } from "../variables.js";
 import findCharacters from "../characters/controllers/findCharacters.js";
 import { movieIdsForUser } from "../moviesPerUserCache.js";
+import getCharacter from "../characters/controllers/getCharacter.js";
 
 const app = new Hono();
 
@@ -27,8 +28,8 @@ app.get(
   async (c) => {
     const { id } = c.req.valid("param");
 
-    // const character = await getCharacter(id);
-    // return c.json(character);
+    const character = await getCharacter(id);
+    return c.json(character);
   }
 );
 
