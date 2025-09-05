@@ -3,9 +3,9 @@ import { Hono } from "hono";
 import { getCookie } from "hono/cookie";
 import z from "zod";
 import { SESSION_COOKIE } from "../variables.js";
-import findCharacters from "../characters/controllers/findCharacters.js";
+import findCharacters from "./controllers/findCharacters.js";
 import { movieIdsForUser } from "../moviesPerUserCache.js";
-import getCharacter from "../characters/controllers/getCharacter.js";
+import getCharacter from "./controllers/getCharacter.js";
 
 const app = new Hono();
 

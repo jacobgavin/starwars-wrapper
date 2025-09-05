@@ -2,9 +2,9 @@ import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 import z from "zod";
 import { getSessionCookie } from "../utils/getSessionCookie.js";
-import findMovies from "../movies/controllers/findMovies.js";
-import getMovie from "../movies/controllers/getMovie.js";
-import { movieSortOrderSchema } from "../movies/validators.js";
+import findMovies from "./controllers/findMovies.js";
+import getMovie from "./controllers/getMovie.js";
+import { movieSortOrderSchema } from "./validators.js";
 import { setMovieIdsForUser } from "../moviesPerUserCache.js";
 
 const app = new Hono();

@@ -1,11 +1,10 @@
-import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { logger } from "hono/logger";
 import { getCookie, setCookie } from "hono/cookie";
 import { HTTPException } from "hono/http-exception";
 import { SESSION_COOKIE } from "./variables.js";
-import movies from "./routes/Movies.routes.js";
-import characters from "./routes/Characters.routes.js";
+import movies from "./movies/movies.routes.js";
+import characters from "./characters/characters.routes.js";
 
 const app = new Hono();
 
@@ -13,7 +12,6 @@ app.use(logger());
 
 app.use("*", (c, next) => {
   const sessionCookie = getCookie(c, SESSION_COOKIE);
-  console.log({ sessionCookie });
   if (!sessionCookie) {
     setCookie(c, SESSION_COOKIE, crypto.randomUUID());
   }

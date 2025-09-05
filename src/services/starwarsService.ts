@@ -59,7 +59,10 @@ class StarwarsService {
 
 export const starwarsService = new StarwarsService();
 
-type Film = Movie & {
+type Film = {
+  title: string;
+  episode_id: number;
+  release_date: string;
   starships: string[];
   characters: string[];
   planets: string[];
