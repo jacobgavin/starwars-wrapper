@@ -2,6 +2,8 @@ import { Hono } from "hono";
 import { logger } from "hono/logger";
 import { getCookie, setCookie } from "hono/cookie";
 import { HTTPException } from "hono/http-exception";
+import { etag } from "hono/etag";
+
 import { SESSION_COOKIE } from "./variables.js";
 import movies from "./movies/movies.routes.js";
 import characters from "./characters/characters.routes.js";
@@ -18,6 +20,8 @@ app.use("*", (c, next) => {
 
   return next();
 });
+
+app.get("*", etag());
 
 app.onError((error, c) => {
   if (error instanceof HTTPException) {

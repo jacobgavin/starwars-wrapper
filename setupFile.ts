@@ -1,5 +1,4 @@
 process.env.TZ = "UTC";
-const previousPort = parseInt(process.env.PORT ?? "3000");
 
-process.env.PORT = (previousPort + 1).toString();
-console.log({ previousPort, current: process.env.PORT });
+// set port to thread id
+process.env.PORT = "3000" + process.env.VITEST_POOL_ID;

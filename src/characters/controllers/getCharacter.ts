@@ -17,14 +17,6 @@ export default async function getCharacter(id: number) {
     }
     return 0;
   });
-  console.log(
-    "MOVIES __> ",
-    movies.map((movie) => ({
-      title: movie.title,
-      release: movie.release_date,
-      episode_id: movie.episode_id,
-    }))
-  );
 
   return {
     height: character.height,
