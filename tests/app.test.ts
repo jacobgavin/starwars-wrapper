@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { app } from "../src/app.js";
 
 describe("App", () => {
-  it.only("sets e-tag on request", async () => {
+  it("sets e-tag on request", async () => {
     const res = await app.request("/movies/1");
     expect(res.status).toEqual(200);
     const etag = res.headers.get("etag");
